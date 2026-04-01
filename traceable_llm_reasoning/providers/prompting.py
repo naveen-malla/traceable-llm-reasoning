@@ -1,0 +1,44 @@
+from __future__ import annotations
+
+import json
+
+from traceable_llm_reasoning.reasoning.types import RetrievedCandidate, TaskSpec
+
+
+def build_substitution_prompt(ingredient_name: str, task_spec: TaskSpec, recipe) -> str:
+    return (
+        "You are assisting with a constrained recipe adaptation task.\n"
+        "Return strict JSON with the shape {\"substitutions\": [\"candidate 1\", \"candidate 2\"]}.\n"
+        f"Task: {task_spec.instruction}\n"
+        f"Constraints: {json.dumps(task_spec.constraints, ensure_ascii=True)}\n"
+        f"Source recipe: {recipe.title}\n"
+        f"Ingredient to replace: {ingredient_name}\n"
+        "Prefer substitutions that preserve the role of the ingredient in the dish."
+    )
+
+
+def build_retrieval_rerank_prompt(task_spec: TaskSpec, candidates: list[RetrievedCandidate]) -> str:
+    lines = [
+        "Score how relevant each candidate recipe is for the task.",
+        "Return JSON: {\"scores\": {\"item_id\": 0.0}} with values between 0 and 1.",
+        f"Task: {task_spec.instruction}",
+        f"Constraints: {json.dumps(task_spec.constraints, ensure_ascii=True)}",
+        "Candidates:",
+    ]
+    for candidate in candidates:
+        lines.append(f"- {candidate.item_id}: {candidate.title}")
+    return "\n".join(lines)
+
+
+def build_generation_prompt(task_spec: TaskSpec, source_recipe=None, retrieved_cases=None) -> str:
+    prompt = [
+        "Generate a structured recipe in JSON.",
+        "Return an object with keys: title, category, ingredients, steps, tags, dietary_labels, summary.",
+        f"Task: {task_spec.instruction}",
+        f"Constraints: {json.dumps(task_spec.constraints, ensure_ascii=True)}",
+    ]
+    if source_recipe is not None:
+        prompt.append(f"Start from source recipe '{source_recipe.title}'.")
+    if retrieved_cases:
+        prompt.append("Retrieved examples: " + ", ".join(recipe.title for recipe in retrieved_cases))
+    return "\n".join(prompt)

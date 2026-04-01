@@ -1,0 +1,23 @@
+{
+  "provider_mode": "mock",
+  "systems": [
+    "direct_generation",
+    "retrieve_and_generate",
+    "llm_plan_then_execute",
+    "traceable_reasoning"
+  ],
+  "task_ids": [
+    "recipe_pesto_vegan",
+    "recipe_weeknight_pasta_vegan",
+    "recipe_curry_gf_vegan"
+  ],
+  "retrieval": {
+    "top_k": 3
+  },
+  "search": {
+    "beam_width": 6,
+    "max_depth": 6,
+    "max_expansions": 120,
+    "max_candidates_per_mismatch": 3
+  }
+}

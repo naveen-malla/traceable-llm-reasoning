@@ -1,0 +1,137 @@
+{
+  "schema_version": "1.0",
+  "cases": [
+    {
+      "case_id": "recipe-001",
+      "title": "Creamy Chicken Pesto Pasta",
+      "category": "pasta",
+      "summary": "A rich pasta dish with chicken, basil pesto, cream, and parmesan.",
+      "ingredients": [
+        {"name": "chicken breast", "quantity": 2, "unit": "pieces", "roles": ["protein"]},
+        {"name": "pasta", "quantity": 300, "unit": "g", "roles": ["base"], "tags": ["gluten"]},
+        {"name": "basil pesto", "quantity": 4, "unit": "tbsp", "roles": ["sauce"], "tags": ["nuts", "dairy"]},
+        {"name": "heavy cream", "quantity": 120, "unit": "ml", "roles": ["sauce"], "tags": ["dairy"]},
+        {"name": "parmesan", "quantity": 40, "unit": "g", "roles": ["topping"], "tags": ["dairy"]},
+        {"name": "olive oil", "quantity": 1, "unit": "tbsp", "roles": ["fat"]},
+        {"name": "garlic", "quantity": 2, "unit": "cloves", "roles": ["aromatic"]},
+        {"name": "salt", "quantity": 1, "unit": "tsp", "roles": ["seasoning"]}
+      ],
+      "steps": [
+        {"step_id": "s1", "text": "Season the chicken and sear it in olive oil until cooked through.", "actions": [{"verb": "sear", "targets": ["chicken breast"]}]},
+        {"step_id": "s2", "text": "Cook the pasta in salted water until al dente.", "actions": [{"verb": "boil", "targets": ["pasta"]}]},
+        {"step_id": "s3", "text": "Warm the pesto, cream, and garlic together to make a sauce.", "actions": [{"verb": "combine", "targets": ["basil pesto", "heavy cream", "garlic"]}]},
+        {"step_id": "s4", "text": "Toss the pasta with the sauce and sliced chicken.", "actions": [{"verb": "toss", "targets": ["pasta", "basil pesto", "heavy cream", "chicken breast"]}]},
+        {"step_id": "s5", "text": "Finish with parmesan and serve warm.", "actions": [{"verb": "garnish", "targets": ["parmesan"]}]}
+      ],
+      "tags": ["creamy", "comfort-food", "weeknight"],
+      "dietary_labels": ["contains-meat", "contains-dairy", "contains-gluten", "contains-nuts"],
+      "default_servings": 2
+    },
+    {
+      "case_id": "recipe-002",
+      "title": "Chickpea Pesto Pasta",
+      "category": "pasta",
+      "summary": "A vegetarian pasta with chickpeas, dairy-free pesto, and lemon.",
+      "ingredients": [
+        {"name": "chickpeas", "quantity": 1, "unit": "can", "roles": ["protein"]},
+        {"name": "pasta", "quantity": 300, "unit": "g", "roles": ["base"], "tags": ["gluten"]},
+        {"name": "vegan pesto", "quantity": 4, "unit": "tbsp", "roles": ["sauce"], "tags": ["nuts"]},
+        {"name": "lemon", "quantity": 1, "unit": "piece", "roles": ["acid"]},
+        {"name": "olive oil", "quantity": 1, "unit": "tbsp", "roles": ["fat"]},
+        {"name": "garlic", "quantity": 2, "unit": "cloves", "roles": ["aromatic"]}
+      ],
+      "steps": [
+        {"step_id": "s1", "text": "Cook the pasta until tender.", "actions": [{"verb": "boil", "targets": ["pasta"]}]},
+        {"step_id": "s2", "text": "Warm the chickpeas with garlic and olive oil.", "actions": [{"verb": "saute", "targets": ["chickpeas", "garlic"]}]},
+        {"step_id": "s3", "text": "Toss pasta with vegan pesto and lemon juice.", "actions": [{"verb": "toss", "targets": ["pasta", "vegan pesto", "lemon"]}]}
+      ],
+      "tags": ["vegetarian", "quick"],
+      "dietary_labels": ["vegetarian", "contains-gluten", "contains-nuts"],
+      "default_servings": 2
+    },
+    {
+      "case_id": "recipe-003",
+      "title": "Gluten-Free Vegan Pesto Pasta",
+      "category": "pasta",
+      "summary": "A vegan, nut-free, and gluten-free pesto pasta built around chickpea pasta and seed pesto.",
+      "ingredients": [
+        {"name": "chickpea pasta", "quantity": 250, "unit": "g", "roles": ["base"], "tags": ["gluten-free"]},
+        {"name": "sunflower seed pesto", "quantity": 4, "unit": "tbsp", "roles": ["sauce"], "tags": ["nut-free", "vegan"]},
+        {"name": "white beans", "quantity": 1, "unit": "can", "roles": ["protein"]},
+        {"name": "spinach", "quantity": 2, "unit": "cups", "roles": ["vegetable"]},
+        {"name": "olive oil", "quantity": 1, "unit": "tbsp", "roles": ["fat"]},
+        {"name": "garlic", "quantity": 2, "unit": "cloves", "roles": ["aromatic"]},
+        {"name": "lemon", "quantity": 1, "unit": "piece", "roles": ["acid"]}
+      ],
+      "steps": [
+        {"step_id": "s1", "text": "Cook the chickpea pasta in salted water.", "actions": [{"verb": "boil", "targets": ["chickpea pasta"]}]},
+        {"step_id": "s2", "text": "Warm garlic and olive oil, then add beans and spinach.", "actions": [{"verb": "saute", "targets": ["garlic", "olive oil", "white beans", "spinach"]}]},
+        {"step_id": "s3", "text": "Toss the pasta with sunflower seed pesto and lemon.", "actions": [{"verb": "toss", "targets": ["chickpea pasta", "sunflower seed pesto", "lemon"]}]}
+      ],
+      "tags": ["vegan", "nut-free", "gluten-free", "light"],
+      "dietary_labels": ["vegan", "vegetarian", "gluten-free", "nut-free"]
+    },
+    {
+      "case_id": "recipe-004",
+      "title": "Tomato Basil Spaghetti",
+      "category": "pasta",
+      "summary": "A simple tomato pasta with basil and olive oil.",
+      "ingredients": [
+        {"name": "spaghetti", "quantity": 300, "unit": "g", "roles": ["base"], "tags": ["gluten"]},
+        {"name": "tomatoes", "quantity": 4, "unit": "pieces", "roles": ["sauce"]},
+        {"name": "basil", "quantity": 1, "unit": "handful", "roles": ["herb"]},
+        {"name": "olive oil", "quantity": 2, "unit": "tbsp", "roles": ["fat"]},
+        {"name": "garlic", "quantity": 2, "unit": "cloves", "roles": ["aromatic"]}
+      ],
+      "steps": [
+        {"step_id": "s1", "text": "Cook the spaghetti until al dente.", "actions": [{"verb": "boil", "targets": ["spaghetti"]}]},
+        {"step_id": "s2", "text": "Cook tomatoes, garlic, and olive oil into a sauce.", "actions": [{"verb": "simmer", "targets": ["tomatoes", "garlic", "olive oil"]}]},
+        {"step_id": "s3", "text": "Fold in basil and toss with spaghetti.", "actions": [{"verb": "toss", "targets": ["spaghetti", "basil"]}]}
+      ],
+      "tags": ["vegan", "simple"],
+      "dietary_labels": ["vegan", "vegetarian", "contains-gluten"]
+    },
+    {
+      "case_id": "recipe-005",
+      "title": "Coconut Chickpea Curry",
+      "category": "curry",
+      "summary": "A vegan curry with chickpeas, coconut milk, and vegetables.",
+      "ingredients": [
+        {"name": "chickpeas", "quantity": 2, "unit": "can", "roles": ["protein"]},
+        {"name": "coconut milk", "quantity": 400, "unit": "ml", "roles": ["sauce"]},
+        {"name": "rice", "quantity": 250, "unit": "g", "roles": ["base"], "tags": ["gluten-free"]},
+        {"name": "onion", "quantity": 1, "unit": "piece", "roles": ["aromatic"]},
+        {"name": "garlic", "quantity": 2, "unit": "cloves", "roles": ["aromatic"]},
+        {"name": "curry powder", "quantity": 2, "unit": "tsp", "roles": ["seasoning"]}
+      ],
+      "steps": [
+        {"step_id": "s1", "text": "Cook rice separately.", "actions": [{"verb": "boil", "targets": ["rice"]}]},
+        {"step_id": "s2", "text": "Saute onion and garlic, then add curry powder.", "actions": [{"verb": "saute", "targets": ["onion", "garlic"]}]},
+        {"step_id": "s3", "text": "Add chickpeas and coconut milk and simmer until thick.", "actions": [{"verb": "simmer", "targets": ["chickpeas", "coconut milk"]}]}
+      ],
+      "tags": ["vegan", "gluten-free"],
+      "dietary_labels": ["vegan", "vegetarian", "gluten-free", "nut-free"]
+    },
+    {
+      "case_id": "recipe-006",
+      "title": "Lentil Bolognese",
+      "category": "pasta",
+      "summary": "A hearty tomato and lentil sauce served over pasta.",
+      "ingredients": [
+        {"name": "lentils", "quantity": 1, "unit": "cup", "roles": ["protein"]},
+        {"name": "pasta", "quantity": 300, "unit": "g", "roles": ["base"], "tags": ["gluten"]},
+        {"name": "tomato sauce", "quantity": 2, "unit": "cups", "roles": ["sauce"]},
+        {"name": "carrot", "quantity": 1, "unit": "piece", "roles": ["vegetable"]},
+        {"name": "celery", "quantity": 1, "unit": "stalk", "roles": ["vegetable"]},
+        {"name": "olive oil", "quantity": 1, "unit": "tbsp", "roles": ["fat"]}
+      ],
+      "steps": [
+        {"step_id": "s1", "text": "Cook the pasta.", "actions": [{"verb": "boil", "targets": ["pasta"]}]},
+        {"step_id": "s2", "text": "Saute carrot and celery in olive oil.", "actions": [{"verb": "saute", "targets": ["carrot", "celery", "olive oil"]}]},
+        {"step_id": "s3", "text": "Add lentils and tomato sauce and simmer.", "actions": [{"verb": "simmer", "targets": ["lentils", "tomato sauce"]}]}
+      ],
+      "tags": ["vegan", "hearty"],
+      "dietary_labels": ["vegan", "vegetarian", "contains-gluten", "nut-free"]
+    }
+  ]
+}

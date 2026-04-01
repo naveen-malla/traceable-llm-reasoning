@@ -1,0 +1,90 @@
+{
+  "schema_version": "2.0",
+  "tasks": [
+    {
+      "task_id": "recipe_pesto_vegan",
+      "domain": "recipes",
+      "instruction": "Adapt creamy chicken pesto pasta to be vegan, nut-free, and gluten-free while keeping it recognizably creamy pesto pasta.",
+      "source_hint": "recipe-001",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["chicken", "dairy", "parmesan", "cream", "pesto with nuts", "wheat pasta"],
+        "dietary_requirements": ["vegan", "nut-free", "gluten-free"],
+        "preferred_tags": ["creamy", "pasta"]
+      },
+      "metadata": {
+        "notes": "Flagship adaptation task used throughout the demo.",
+        "minimal_edit": true,
+        "style_goals": ["retain creamy texture", "retain pesto identity"],
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_weeknight_pasta_vegan",
+      "domain": "recipes",
+      "instruction": "Make a pasta recipe nut-free and vegan with as few changes as possible.",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["nuts", "cream", "cheese", "chicken"],
+        "dietary_requirements": ["vegan", "nut-free"],
+        "preferred_tags": ["quick"]
+      },
+      "metadata": {
+        "notes": "A softer constraint set that tests retrieval quality.",
+        "minimal_edit": true,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_curry_gf_vegan",
+      "domain": "recipes",
+      "instruction": "Turn the curry recipe into a gluten-free vegan version without changing the overall dish identity.",
+      "source_hint": "recipe-005",
+      "constraints": {
+        "category": "curry",
+        "dietary_requirements": ["vegan", "gluten-free"],
+        "exclude_ingredients": ["cream", "yogurt", "wheat"],
+        "preferred_tags": ["hearty"]
+      },
+      "metadata": {
+        "notes": "Tests whether the pipeline can preserve a curry workflow under dietary constraints.",
+        "style_goals": ["keep curry structure"],
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_pesto_impossible",
+      "domain": "recipes",
+      "instruction": "Adapt creamy chicken pesto pasta to vegan, nut-free, and gluten-free without using the normal protein, pasta, pesto, or cream replacements.",
+      "source_hint": "recipe-001",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": [
+          "chicken",
+          "dairy",
+          "parmesan",
+          "cream",
+          "pesto with nuts",
+          "wheat pasta",
+          "tofu",
+          "white beans",
+          "chickpeas",
+          "oat cream",
+          "coconut milk",
+          "sunflower seed pesto",
+          "nutritional yeast",
+          "chickpea pasta",
+          "gluten-free pasta",
+          "rice noodles"
+        ],
+        "dietary_requirements": ["vegan", "nut-free", "gluten-free"],
+        "required_ingredients": ["tofu", "oat cream", "sunflower seed pesto", "chickpea pasta"]
+      },
+      "metadata": {
+        "notes": "Synthetic impossible task for smoke testing failure behavior.",
+        "impossible": true,
+        "include_in_default": false
+      }
+    }
+  ]
+}
