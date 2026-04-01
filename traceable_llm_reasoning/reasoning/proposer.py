@@ -5,15 +5,14 @@ from traceable_llm_reasoning.benchmarks.recipes.retrieval import Mismatch
 from traceable_llm_reasoning.reasoning.types import ModelCall, OperatorProposal, ReasoningPlan, TaskSpec
 
 
-def build_operator_proposals(
+def _fallback_proposals(
     task_spec: TaskSpec,
     recipe: RecipeCase,
     mismatches: tuple[Mismatch, ...],
     provider,
-    plan: ReasoningPlan,
     *,
     max_candidates_per_mismatch: int = 3,
-) -> tuple[tuple[OperatorProposal, ...], ModelCall]:
+) -> tuple[OperatorProposal, ...]:
     proposals: list[OperatorProposal] = []
     for mismatch in mismatches:
         if mismatch.kind in {"constraint_violation", "excluded_ingredient"}:
@@ -48,6 +47,55 @@ def build_operator_proposals(
                     source_refs=(step_ref,),
                 )
             )
+    return tuple(proposals)
+
+
+def _coerce_proposals(payload: list[dict[str, object]] | None, fallback: tuple[OperatorProposal, ...]) -> tuple[OperatorProposal, ...]:
+    if not payload:
+        return fallback
+    proposals: list[OperatorProposal] = []
+    for item in payload:
+        if not isinstance(item, dict):
+            continue
+        operator_name = item.get("operator_name")
+        arguments = item.get("arguments")
+        confidence = item.get("confidence", 0.5)
+        rationale = item.get("rationale", "")
+        source_refs = item.get("source_refs", ())
+        if not isinstance(operator_name, str) or not isinstance(arguments, dict):
+            continue
+        if not isinstance(confidence, (int, float)) or not isinstance(rationale, str):
+            continue
+        proposals.append(
+            OperatorProposal(
+                operator_name=operator_name,
+                arguments=dict(arguments),
+                confidence=float(confidence),
+                rationale=rationale,
+                source_refs=tuple(ref for ref in source_refs if isinstance(ref, str)),
+            )
+        )
+    return tuple(proposals) or fallback
+
+
+def build_operator_proposals(
+    task_spec: TaskSpec,
+    recipe: RecipeCase,
+    mismatches: tuple[Mismatch, ...],
+    provider,
+    plan: ReasoningPlan,
+    *,
+    max_candidates_per_mismatch: int = 3,
+) -> tuple[tuple[OperatorProposal, ...], ModelCall]:
+    fallback = _fallback_proposals(
+        task_spec,
+        recipe,
+        mismatches,
+        provider,
+        max_candidates_per_mismatch=max_candidates_per_mismatch,
+    )
+    payload = provider.propose_actions(task_spec, recipe, mismatches, plan=plan, limit=max_candidates_per_mismatch)
+    proposals = list(_coerce_proposals(payload if isinstance(payload, list) else None, fallback))
     deduped: list[OperatorProposal] = []
     seen: set[tuple[str, tuple[tuple[str, str], ...]]] = set()
     for proposal in proposals:

@@ -6,11 +6,6 @@
     "llm_plan_then_execute",
     "traceable_reasoning"
   ],
-  "task_ids": [
-    "recipe_pesto_vegan",
-    "recipe_weeknight_pasta_vegan",
-    "recipe_curry_gf_vegan"
-  ],
   "retrieval": {
     "top_k": 3
   },

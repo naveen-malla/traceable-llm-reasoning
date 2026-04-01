@@ -125,6 +125,116 @@ class RuleBasedProvider(ReasoningProvider):
         ingredient = _find_ingredient(recipe, ingredient_name) or Ingredient(ingredient_name)
         return substitution_candidates(ingredient, recipe_task_from_task_spec(task_spec))[:limit]
 
+    def plan_reasoning(self, task_spec: TaskSpec, recipe: RecipeCase, mismatches) -> dict[str, object] | None:
+        self.call_count += 1
+        steps: list[dict[str, object]] = []
+        risks: list[str] = []
+        for mismatch in mismatches:
+            if mismatch.kind in {"constraint_violation", "excluded_ingredient"}:
+                risk = "Replacement may drift away from the original dish identity."
+                steps.append(
+                    {
+                        "title": f"Replace {mismatch.subject}",
+                        "purpose": mismatch.detail,
+                        "expected_check": "Verify that the replacement clears the relevant dietary or exclusion constraint.",
+                        "risk": risk,
+                    }
+                )
+                if risk not in risks:
+                    risks.append(risk)
+            elif mismatch.kind == "missing_required_ingredient":
+                risk = "The required ingredient may be inserted too late in the workflow."
+                steps.append(
+                    {
+                        "title": f"Add {mismatch.subject}",
+                        "purpose": mismatch.detail,
+                        "expected_check": "Verify that the ingredient list and workflow both reference the new ingredient.",
+                        "risk": risk,
+                    }
+                )
+                if risk not in risks:
+                    risks.append(risk)
+        if not steps:
+            steps.append(
+                {
+                    "title": "Verify source recipe",
+                    "purpose": "No explicit mismatches were detected before execution.",
+                    "expected_check": "Confirm that the source already satisfies the task.",
+                    "risk": "A subtle mismatch may still exist in text or tags.",
+                }
+            )
+            risks.append("A subtle mismatch may still exist in text or tags.")
+        return {
+            "summary": f"Resolve {len(mismatches)} mismatch(es) while keeping the source recipe recognizable.",
+            "steps": steps,
+            "target_edits": [step["title"] for step in steps],
+            "risks": risks,
+        }
+
+    def propose_actions(self, task_spec: TaskSpec, recipe: RecipeCase, mismatches, plan=None, limit: int = 3) -> list[dict[str, object]] | None:
+        self.call_count += 1
+        proposals: list[dict[str, object]] = []
+        for mismatch in mismatches:
+            if mismatch.kind in {"constraint_violation", "excluded_ingredient"}:
+                candidates = self.suggest_substitutions(mismatch.subject, task_spec, recipe, limit=limit)
+                for index, candidate in enumerate(candidates):
+                    proposals.append(
+                        {
+                            "operator_name": "SubstituteIngredient",
+                            "arguments": {"old": mismatch.subject, "new": candidate},
+                            "confidence": round(max(0.4, 0.9 - (index * 0.1)), 2),
+                            "rationale": mismatch.detail,
+                            "source_refs": [mismatch.subject],
+                        }
+                    )
+                proposals.append(
+                    {
+                        "operator_name": "RemoveIngredient",
+                        "arguments": {"old": mismatch.subject},
+                        "confidence": 0.3,
+                        "rationale": f"Fallback removal for {mismatch.subject} when no safe substitution exists.",
+                        "source_refs": [mismatch.subject],
+                    }
+                )
+            elif mismatch.kind == "missing_required_ingredient":
+                step_ref = recipe.steps[-1].step_id if recipe.steps else "s1"
+                proposals.append(
+                    {
+                        "operator_name": "AddIngredient",
+                        "arguments": {"new": mismatch.subject, "step_ref": step_ref},
+                        "confidence": 0.55,
+                        "rationale": mismatch.detail,
+                        "source_refs": [step_ref],
+                    }
+                )
+        return proposals
+
+    def critique_recipe(self, task_spec: TaskSpec, recipe: RecipeCase, verification) -> dict[str, object] | None:
+        self.call_count += 1
+        repair_proposals: list[dict[str, object]] = []
+        notes: list[str] = []
+        if verification.passed:
+            notes.append("The candidate passes structural, hard-constraint, and dependency checks.")
+        else:
+            notes.append("The candidate still fails at least one verifier stage.")
+            for issue in verification.hard_constraint_issues:
+                if issue.get("kind") == "missing_required_ingredient":
+                    step_ref = recipe.steps[-1].step_id if recipe.steps else "s1"
+                    repair_proposals.append(
+                        {
+                            "operator_name": "AddIngredient",
+                            "arguments": {"new": issue["subject"], "step_ref": step_ref},
+                            "confidence": 0.45,
+                            "rationale": issue["detail"],
+                            "source_refs": [step_ref],
+                        }
+                    )
+        return {
+            "approved": verification.passed,
+            "notes": notes,
+            "repair_proposals": repair_proposals,
+        }
+
     def generate_recipe(self, task_spec: TaskSpec, source_recipe: RecipeCase | None = None, retrieved_cases=None) -> RecipeCase:
         self.call_count += 1
         task = recipe_task_from_task_spec(task_spec)

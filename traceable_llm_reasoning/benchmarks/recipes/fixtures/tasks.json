@@ -1,5 +1,5 @@
 {
-  "schema_version": "2.0",
+  "schema_version": "2.1",
   "tasks": [
     {
       "task_id": "recipe_pesto_vegan",
@@ -53,6 +53,281 @@
       }
     },
     {
+      "task_id": "recipe_pesto_vegetarian_gluten_free",
+      "domain": "recipes",
+      "instruction": "Adapt creamy chicken pesto pasta to a vegetarian and gluten-free version while keeping it creamy.",
+      "source_hint": "recipe-001",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["chicken", "wheat pasta"],
+        "dietary_requirements": ["vegetarian", "gluten-free"],
+        "preferred_tags": ["creamy", "comfort-food"]
+      },
+      "metadata": {
+        "notes": "Mostly tests protein and base replacement without removing dairy.",
+        "minimal_edit": true,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_pesto_nut_free",
+      "domain": "recipes",
+      "instruction": "Make creamy chicken pesto pasta nut-free while preserving the dish identity.",
+      "source_hint": "recipe-001",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["nuts", "pesto with nuts"],
+        "dietary_requirements": ["nut-free"],
+        "preferred_tags": ["creamy"]
+      },
+      "metadata": {
+        "notes": "A targeted single-ingredient adaptation task.",
+        "minimal_edit": true,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_pesto_vegan_only",
+      "domain": "recipes",
+      "instruction": "Convert creamy chicken pesto pasta into a vegan version while keeping the creamy pesto character.",
+      "source_hint": "recipe-001",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["chicken", "dairy", "parmesan", "cream"],
+        "dietary_requirements": ["vegan"],
+        "preferred_tags": ["creamy", "pasta"]
+      },
+      "metadata": {
+        "notes": "Removes the gluten-free requirement to create a lighter constraint set.",
+        "minimal_edit": true,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_pesto_gluten_free_only",
+      "domain": "recipes",
+      "instruction": "Make creamy chicken pesto pasta gluten-free without changing the rest of the dish more than necessary.",
+      "source_hint": "recipe-001",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["wheat pasta"],
+        "dietary_requirements": ["gluten-free"],
+        "preferred_tags": ["comfort-food"]
+      },
+      "metadata": {
+        "notes": "Single-axis adaptation focused on the base ingredient.",
+        "minimal_edit": true,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_chickpea_pesto_nut_free",
+      "domain": "recipes",
+      "instruction": "Turn chickpea pesto pasta into a nut-free recipe while keeping it quick and bright.",
+      "source_hint": "recipe-002",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["nuts", "pesto with nuts"],
+        "dietary_requirements": ["nut-free"],
+        "preferred_tags": ["quick"]
+      },
+      "metadata": {
+        "notes": "Tests whether the system can select a nut-free pesto alternative.",
+        "minimal_edit": true,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_chickpea_pesto_gluten_free",
+      "domain": "recipes",
+      "instruction": "Adapt chickpea pesto pasta to be gluten-free while keeping the same dish structure.",
+      "source_hint": "recipe-002",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["wheat pasta"],
+        "dietary_requirements": ["gluten-free"],
+        "preferred_tags": ["quick"]
+      },
+      "metadata": {
+        "notes": "Tests a base replacement when the sauce and protein are already suitable.",
+        "minimal_edit": true,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_chickpea_pesto_gf_nut_free",
+      "domain": "recipes",
+      "instruction": "Make chickpea pesto pasta both gluten-free and nut-free.",
+      "source_hint": "recipe-002",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["wheat pasta", "nuts", "pesto with nuts"],
+        "dietary_requirements": ["gluten-free", "nut-free"],
+        "preferred_tags": ["quick"]
+      },
+      "metadata": {
+        "notes": "Combines the two most important constraints for the second pesto case.",
+        "minimal_edit": true,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_spaghetti_gluten_free",
+      "domain": "recipes",
+      "instruction": "Adapt tomato basil spaghetti to be gluten-free while keeping it a simple tomato pasta.",
+      "source_hint": "recipe-004",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["spaghetti", "wheat pasta"],
+        "dietary_requirements": ["gluten-free"],
+        "preferred_tags": ["simple"]
+      },
+      "metadata": {
+        "notes": "A minimal-edit base replacement task anchored on the simplest pasta case.",
+        "minimal_edit": true,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_spaghetti_gluten_free_add_protein",
+      "domain": "recipes",
+      "instruction": "Make tomato basil spaghetti gluten-free and add a protein source without losing the simple tomato-pasta feel.",
+      "source_hint": "recipe-004",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["spaghetti", "wheat pasta"],
+        "dietary_requirements": ["gluten-free"],
+        "required_ingredients": ["white beans"],
+        "preferred_tags": ["simple"]
+      },
+      "metadata": {
+        "notes": "Forces the add-ingredient path after the base is adapted.",
+        "minimal_edit": false,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_bolognese_gluten_free",
+      "domain": "recipes",
+      "instruction": "Adapt lentil bolognese to be gluten-free while preserving the hearty pasta-sauce structure.",
+      "source_hint": "recipe-006",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["wheat pasta"],
+        "dietary_requirements": ["gluten-free"],
+        "preferred_tags": ["hearty"]
+      },
+      "metadata": {
+        "notes": "A hearty gluten-free adaptation with minimal required changes.",
+        "minimal_edit": true,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_bolognese_gluten_free_nut_free",
+      "domain": "recipes",
+      "instruction": "Make lentil bolognese gluten-free and nut-free without changing the sauce profile.",
+      "source_hint": "recipe-006",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["wheat pasta", "nuts"],
+        "dietary_requirements": ["gluten-free", "nut-free"],
+        "preferred_tags": ["hearty"]
+      },
+      "metadata": {
+        "notes": "Adds a second constraint even though the original is already nut-free.",
+        "minimal_edit": true,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_bolognese_gf_add_nutritional_yeast",
+      "domain": "recipes",
+      "instruction": "Adapt lentil bolognese to be gluten-free and finish it with nutritional yeast.",
+      "source_hint": "recipe-006",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["wheat pasta"],
+        "dietary_requirements": ["gluten-free"],
+        "required_ingredients": ["nutritional yeast"],
+        "preferred_tags": ["hearty"]
+      },
+      "metadata": {
+        "notes": "Combines base replacement with a required garnish addition.",
+        "minimal_edit": false,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_curry_add_spinach",
+      "domain": "recipes",
+      "instruction": "Keep the curry vegan and gluten-free but add spinach to the final dish.",
+      "source_hint": "recipe-005",
+      "constraints": {
+        "category": "curry",
+        "dietary_requirements": ["vegan", "gluten-free"],
+        "required_ingredients": ["spinach"],
+        "preferred_tags": ["hearty"]
+      },
+      "metadata": {
+        "notes": "Exercises the add-ingredient path in the curry workflow.",
+        "minimal_edit": false,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_curry_add_lemon",
+      "domain": "recipes",
+      "instruction": "Keep the curry vegan and gluten-free but brighten it with lemon.",
+      "source_hint": "recipe-005",
+      "constraints": {
+        "category": "curry",
+        "dietary_requirements": ["vegan", "gluten-free"],
+        "required_ingredients": ["lemon"],
+        "preferred_tags": ["hearty"]
+      },
+      "metadata": {
+        "notes": "Another controlled add-ingredient task with a garnish-style ingredient.",
+        "minimal_edit": false,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_spaghetti_add_white_beans",
+      "domain": "recipes",
+      "instruction": "Keep tomato basil spaghetti simple and vegan but add white beans for protein.",
+      "source_hint": "recipe-004",
+      "constraints": {
+        "category": "pasta",
+        "dietary_requirements": ["vegan"],
+        "required_ingredients": ["white beans"],
+        "preferred_tags": ["simple"]
+      },
+      "metadata": {
+        "notes": "Tests whether the add-ingredient action can work without a dietary adaptation.",
+        "minimal_edit": false,
+        "include_in_default": true
+      }
+    },
+    {
+      "task_id": "recipe_pesto_require_nutritional_yeast",
+      "domain": "recipes",
+      "instruction": "Adapt creamy chicken pesto pasta to vegan, nut-free, and gluten-free and explicitly include nutritional yeast.",
+      "source_hint": "recipe-001",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["chicken", "dairy", "parmesan", "cream", "pesto with nuts", "wheat pasta"],
+        "dietary_requirements": ["vegan", "nut-free", "gluten-free"],
+        "required_ingredients": ["nutritional yeast"],
+        "preferred_tags": ["creamy", "pasta"]
+      },
+      "metadata": {
+        "notes": "The garnish requirement overlaps with a common substitution target.",
+        "minimal_edit": false,
+        "include_in_default": true
+      }
+    },
+    {
       "task_id": "recipe_pesto_impossible",
       "domain": "recipes",
       "instruction": "Adapt creamy chicken pesto pasta to vegan, nut-free, and gluten-free without using the normal protein, pasta, pesto, or cream replacements.",
@@ -82,6 +357,74 @@
       },
       "metadata": {
         "notes": "Synthetic impossible task for smoke testing failure behavior.",
+        "impossible": true,
+        "include_in_default": false
+      }
+    },
+    {
+      "task_id": "recipe_spaghetti_impossible_no_alt_base",
+      "domain": "recipes",
+      "instruction": "Make tomato basil spaghetti gluten-free without using any alternative pasta base.",
+      "source_hint": "recipe-004",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["spaghetti", "wheat pasta", "chickpea pasta", "gluten-free pasta", "gluten-free spaghetti", "rice noodles"],
+        "dietary_requirements": ["gluten-free"],
+        "required_ingredients": ["chickpea pasta"]
+      },
+      "metadata": {
+        "notes": "Contradictory base requirement for the simple tomato pasta case.",
+        "impossible": true,
+        "include_in_default": false
+      }
+    },
+    {
+      "task_id": "recipe_bolognese_impossible_no_alt_base",
+      "domain": "recipes",
+      "instruction": "Adapt lentil bolognese to be gluten-free while banning all available gluten-free pasta substitutes.",
+      "source_hint": "recipe-006",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["wheat pasta", "chickpea pasta", "gluten-free pasta", "rice noodles"],
+        "dietary_requirements": ["gluten-free"],
+        "required_ingredients": ["chickpea pasta"]
+      },
+      "metadata": {
+        "notes": "Contradictory base requirement for the bolognese case.",
+        "impossible": true,
+        "include_in_default": false
+      }
+    },
+    {
+      "task_id": "recipe_chickpea_pesto_impossible_no_safe_sauce",
+      "domain": "recipes",
+      "instruction": "Make chickpea pesto pasta nut-free while banning every safe pesto replacement.",
+      "source_hint": "recipe-002",
+      "constraints": {
+        "category": "pasta",
+        "exclude_ingredients": ["nuts", "pesto with nuts", "vegan pesto", "sunflower seed pesto", "herb sauce"],
+        "dietary_requirements": ["nut-free"],
+        "required_ingredients": ["sunflower seed pesto"]
+      },
+      "metadata": {
+        "notes": "Contradictory sauce constraints for the second pesto case.",
+        "impossible": true,
+        "include_in_default": false
+      }
+    },
+    {
+      "task_id": "recipe_curry_impossible_protein_conflict",
+      "domain": "recipes",
+      "instruction": "Keep the curry vegan and gluten-free but ban all available protein substitutions while requiring tofu.",
+      "source_hint": "recipe-005",
+      "constraints": {
+        "category": "curry",
+        "dietary_requirements": ["vegan", "gluten-free"],
+        "exclude_ingredients": ["chickpeas", "white beans", "tofu"],
+        "required_ingredients": ["tofu"]
+      },
+      "metadata": {
+        "notes": "Contradictory protein constraint for the curry case.",
         "impossible": true,
         "include_in_default": false
       }

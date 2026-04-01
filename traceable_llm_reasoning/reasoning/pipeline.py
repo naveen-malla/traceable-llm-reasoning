@@ -143,7 +143,7 @@ def _run_reasoned_execution(
     retrieved_context = build_retrieved_context(task_spec, casebase, provider, top_k=top_k)
     source_recipe = get_source_case(task_spec, casebase, retrieved_context)
     mismatches = detect_mismatches(task, source_recipe)
-    plan, plan_call = build_reasoning_plan(task_spec, mismatches, provider.name)
+    plan, plan_call = build_reasoning_plan(task_spec, source_recipe, mismatches, provider)
     proposals, proposal_call = build_operator_proposals(
         task_spec,
         source_recipe,
@@ -159,7 +159,7 @@ def _run_reasoned_execution(
     critique_call = None
 
     if critique and final_verification is not None:
-        critique_result_payload, critique_call = critique_result(task_spec, final_recipe, final_verification, provider.name)
+        critique_result_payload, critique_call = critique_result(task_spec, final_recipe, final_verification, provider)
         if critique_result_payload.repair_proposals and not critique_result_payload.approved:
             repaired = adapt_recipe(
                 source_recipe,
