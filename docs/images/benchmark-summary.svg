@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="400" viewBox="0 0 760 400">
+  <rect width="760" height="400" fill="#f8fafc" rx="24" />
+  <text x="40" y="48" font-size="30" font-weight="700" fill="#020617" font-family="Helvetica, Arial, sans-serif">Benchmark Success Rate</text>
+  <text x="40" y="78" font-size="18" fill="#475569" font-family="Helvetica, Arial, sans-serif">experiments/runs/20260401T192709Z/summary.json</text>
+
+  <text x="40" y="88" font-size="20" fill="#0f172a" font-family="Helvetica, Arial, sans-serif">direct_generation</text>
+  <rect x="40" y="96" width="520" height="22" rx="11" fill="#e2e8f0" />
+  <rect x="40" y="96" width="27" height="22" rx="11" fill="#2563eb" />
+  <text x="580" y="113" font-size="18" fill="#0f172a" font-family="Helvetica, Arial, sans-serif">5.3%</text>
+
+
+  <text x="40" y="158" font-size="20" fill="#0f172a" font-family="Helvetica, Arial, sans-serif">retrieve_and_generate</text>
+  <rect x="40" y="166" width="520" height="22" rx="11" fill="#e2e8f0" />
+  <rect x="40" y="166" width="218" height="22" rx="11" fill="#2563eb" />
+  <text x="580" y="183" font-size="18" fill="#0f172a" font-family="Helvetica, Arial, sans-serif">42.1%</text>
+
+
+  <text x="40" y="228" font-size="20" fill="#0f172a" font-family="Helvetica, Arial, sans-serif">llm_plan_then_execute</text>
+  <rect x="40" y="236" width="520" height="22" rx="11" fill="#e2e8f0" />
+  <rect x="40" y="236" width="520" height="22" rx="11" fill="#2563eb" />
+  <text x="580" y="253" font-size="18" fill="#0f172a" font-family="Helvetica, Arial, sans-serif">100.0%</text>
+
+
+  <text x="40" y="298" font-size="20" fill="#0f172a" font-family="Helvetica, Arial, sans-serif">traceable_reasoning</text>
+  <rect x="40" y="306" width="520" height="22" rx="11" fill="#e2e8f0" />
+  <rect x="40" y="306" width="520" height="22" rx="11" fill="#2563eb" />
+  <text x="580" y="323" font-size="18" fill="#0f172a" font-family="Helvetica, Arial, sans-serif">100.0%</text>
+
+</svg>

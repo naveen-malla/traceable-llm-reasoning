@@ -4,6 +4,8 @@ Traceable LLM Reasoning is a showcase project about making language models bette
 
 The first benchmark domain is recipe adaptation. Instead of asking a model to rewrite a recipe end to end in one shot, this project retrieves a relevant source recipe, proposes explicit edits, executes them as traceable actions, and verifies the result before returning it.
 
+The benchmark now includes 24 curated tasks, including 5 contradictory or impossible cases used to test failure behavior.
+
 ## Why this project exists
 
 Large language models are often strong at fluent text generation but weaker at:
@@ -54,6 +56,20 @@ Task
   -> Critique
   -> Final Result + Trace
 ```
+
+## Demo screenshots
+
+Overview:
+
+![Trace overview](docs/images/demo-overview.png)
+
+Action proposal trace:
+
+![Proposal trace](docs/images/demo-proposals.png)
+
+Verification view:
+
+![Verification view](docs/images/demo-verification.png)
 
 ## Flagship example
 
@@ -112,12 +128,21 @@ Run the default benchmark:
 python -m traceable_llm_reasoning.cli benchmark --config experiments/configs/default.json
 ```
 
+Run the trace explorer:
+
+```bash
+streamlit run apps/streamlit/app.py
+```
+
 ## Current benchmark result
+
+![Benchmark summary](docs/images/benchmark-summary.svg)
 
 Latest default benchmark run:
 
-- `direct_generation`: success rate `0.3333`
-- `retrieve_and_generate`: success rate `0.6667`
+- default suite size: `19` tasks
+- `direct_generation`: success rate `0.0526`
+- `retrieve_and_generate`: success rate `0.4211`
 - `llm_plan_then_execute`: success rate `1.0`
 - `traceable_reasoning`: success rate `1.0`
 
@@ -158,11 +183,13 @@ Environment variables:
 
 - benchmark fixtures and runnable recipe tasks
 - retrieval with optional reranking
-- structured planning and operator proposals
+- provider-backed structured planning and operator proposals
 - symbolic execution with beam search and greedy rescue
-- multi-stage verification
+- provider-backed critique and multi-stage verification
+- Streamlit trace explorer for the flagship benchmark
 - JSON experiment outputs under `experiments/runs/`
 - runnable CLI and smoke tests
+- benchmark visualization script in `scripts/render_summary_svg.py`
 
 ## Roadmap
 
